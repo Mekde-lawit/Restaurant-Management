@@ -16,7 +16,6 @@ import (
 )
 
 var foodCollection *mongo.Collection = database.OpenCollection("food")
-var menuCollection *mongo.Collection = database.OpenCollection("menu")
 var validate = validator.New()
 
 func GetFoods(c *gin.Context) {
