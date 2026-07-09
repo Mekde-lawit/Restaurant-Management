@@ -133,6 +133,10 @@ func UpdateMenu(c *gin.Context) {
 		return
 	}
 
+	// if menu.Start_Date != nil && menu.End_Date != nil{
+	// 	if !inTimeSpan
+	// }
+
 	update := bson.M{
     "$set": bson.M{
         "name":       menu.Name,
@@ -167,4 +171,8 @@ func UpdateMenu(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Menu updated successfully",
 	})
+}
+
+func inTimeSpan(start,end time.Time) bool{
+	return start.After(time.Now()) && end.After(start)
 }
