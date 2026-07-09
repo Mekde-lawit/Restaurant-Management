@@ -11,7 +11,7 @@ type Menu struct {
 	Menu_Id    string        `bson:"menu_id" validate:"required"`
 	Food_Id    string        `bson:"food_id" validate:"required"`
 	Name       string        `bson:"name" validate:"required"`
-	Category   string        `bson:"order_id" validate:"required"`
+	Category   string        `bson:"category" validate:"required"`
 	Start_Date time.Time     `bson:"start_date"`
 	End_Date   time.Time     `bson:"end_date"`
 	Created_At time.Time     `bson:"created_at"`

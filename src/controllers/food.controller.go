@@ -19,7 +19,7 @@ var foodCollection *mongo.Collection = database.OpenCollection("food")
 var validate = validator.New()
 
 func GetFoods(c *gin.Context) {
-	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+	ctx, cancel := context.WithTimeout(c.Request.Context(), 10*time.Second)
 	defer cancel()
 
 	cursor, err := foodCollection.Find(ctx, bson.M{})
@@ -27,24 +27,19 @@ func GetFoods(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
+		log.Println("err", err)
 		return
 	}
-
 	defer cursor.Close(ctx)
 
 	var foods []models.Food
 
-	for cursor.Next(ctx) {
-		var food models.Food
-
-		if err := cursor.Decode(&food); err != nil {
+	if err:= cursor.All(ctx,&foods);err!=nil{
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"error": err.Error(),
+				 "error": "Failed to decode menus",
 			})
+			log.Println("err", err)
 			return
-		}
-
-		foods = append(foods, food)
 	}
 
 	c.JSON(http.StatusOK, foods)
