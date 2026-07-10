@@ -98,9 +98,9 @@ func CreateInvoice(c *gin.Context) {
 	now := time.Now().UTC()
 
 	invoice.ID = bson.NewObjectID()
-	invoice.Invoice_Id = invoice.ID.Hex()
-	invoice.Created_At = now
-	invoice.Updated_At = now
+	invoice.InvoiceID = invoice.ID.Hex()
+	invoice.CreatedAt = now
+	invoice.UpdatedAt = now
 
 	result, err := invoiceCollection.InsertOne(ctx, invoice)
 	if err != nil {
@@ -142,10 +142,10 @@ func UpdateInvoice(c *gin.Context) {
 
 	update := bson.M{
 		"$set": bson.M{
-			"order_id":          invoice.Order_Id,
-			"payment_method":    invoice.Payment_Method,
-			"payment_status":    invoice.Payment_Status,
-			"payment_due_date":  invoice.Payment_Due_Date,
+			"order_id":          invoice.OrderID,
+			"payment_method":    invoice.PaymentDueDate,
+			"payment_status":    invoice.PaymentStatus,
+			"payment_due_date":  invoice.PaymentDueDate,
 			"updated_at":        time.Now().UTC(),
 		},
 	}
